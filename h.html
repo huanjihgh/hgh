@@ -14,5 +14,22 @@
     
     var d=el.avg('($f1+$f2)',data);
     console.log(d);
+
+
+
+    var data2 = [
+       { f1: 100, f2: 30,name:'dddd' },
+       { f1: 78, f2: 30, name: 'ang' },
+       { f1: 99, f2: 30, name: 'ggg' },
+       { f1: 44, f2: 30, name: 'yyy' },
+       { f1: 32, f2: 30, name: 'ffff' },
+       { f1: 65, f2: 30, name: 'hhh' },
+       { f1: 12, f2: 30, name: 'pfpp' }
+    ]
+
+
+    var ddd = el.select("($f1=100)||($f1=32)||($name[like]f)", data2, "f1,f2,name");
+    console.log(ddd);
+
     
     </script>

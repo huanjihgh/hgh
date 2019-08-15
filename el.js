@@ -406,9 +406,8 @@
             }
         }
 
-        if (k < len - 1)
+        if (k < len)
             fillParams(expression, k, len - k, params);
-
     }
 
     /**
