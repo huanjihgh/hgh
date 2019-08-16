@@ -11,7 +11,7 @@
         {f1:65,f2:30},
         {f1:12,f2:30}
     ]
-    
+    //求平均值，这里两列相加后会除以2
     var d=el.avg('($f1+$f2)',data);
     console.log(d);
 
@@ -27,9 +27,15 @@
        { f1: 12, f2: 30, name: 'pfpp' }
     ]
 
-
+    //筛选数据返回指定的列
     var ddd = el.select("($f1=100)||($f1=32)||($name[like]f)", data2, "f1,f2,name");
     console.log(ddd);
+
+
+    var xx = el.if('xxxxxx+(100*100)', { a: 100, b: 10 });
+
+    //会输出 xxxxxx10000
+    console.log(xx);
 
     
     </script>

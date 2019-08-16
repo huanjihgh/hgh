@@ -846,6 +846,9 @@
         return invokeFn(obj.fnGroups.group, new FnGroup(), data, obj.args, { index: 0, iv: false })
     }
     El.prototype = {
+        extendFn:function(functionName,fn){
+            Fn.prototype[functionName] = fn;
+        },
 
         test: function (expression) {
             var obj = getFunctionsAndParameters(expression);
@@ -854,8 +857,14 @@
 
         run: function (expression) {
             var obj = getFunctionsAndParameters(expression),
-                data = arguments[1];
-            return invokeFn(obj.fnGroups.group, new FnGroup(), data, obj.args, { index: 0, iv: false });
+                data = arguments[1],
+                len=arguments.length;
+            var arg = data;
+            if (len > 2) {
+                for (var k = 2; k < len; k++)
+                    arg = extend({}, arg, arguments[k]);
+            }
+            return invokeFn(obj.fnGroups.group, new FnGroup(), arg, obj.args, { index: 0, iv: false });
         },
 
         /**
@@ -896,25 +905,27 @@
        ** description: 过滤
        **
        **/
-        filter: function (expression, data, sortFied, data2, asc) {
-            var d = [];
+        filter: function (expression, data) {
+            var d = [],len=arguments.length;
             var obj = getFunctionsAndParameters(expression),
                 data = arguments[1];
 
 
             for (var i = 0; i < data.length; i++) {
                 var arg = data[i];
-                if (!!data2)
-                    arg = extend({}, arg, data2);
+                if (len > 3) {
+                    for (var k = 3; k < len; k++)
+                        arg = extend({}, arg, arguments[k]);
+                }
                 if (invokeFn2(obj, arg)) {
                     d.push(data[i]);
                 }
             }
 
-            if (sortFied) {
-                asc = typeof asc === 'undefined' ? true : asc;
-                orderby(d, sortFied, asc);
-            }
+            //if (sortFied) {
+            //    asc = typeof asc === 'undefined' ? true : asc;
+            //    orderby(d, sortFied, asc);
+            //}
 
             return d;
         },
@@ -927,7 +938,7 @@
        **
        **/
         sum: function (expression, data) {
-            var d = [];
+            var d = [],len=arguments.length;
             var obj = getFunctionsAndParameters(expression),
                 data = arguments[1];
 
@@ -935,8 +946,12 @@
                 d[0] = invokeFn2(obj, data);
             } else {
                 for (var i = 0; i < data.length; i++) {
-
-                    d[i] = invokeFn2(obj, data[i]);
+                    var arg = data[i];
+                    if (len > 3) {
+                        for (var k = 3; k < len; k++)
+                            arg = extend({}, arg, arguments[k]);
+                    }
+                    d[i] = invokeFn2(obj, arg);
                 }
             }
 
@@ -958,14 +973,19 @@
             // var d = [];
             var obj = getFunctionsAndParameters(expression),
                 data = arguments[1],
-                num = obj.args.length;
+                num = obj.args.length,
+                    len=arguments.length;
 
             if (Object.prototype.toString.call(data) == '[object Object]') {
                 d[0] = invokeFn2(obj, data);
             } else {
                 for (var i = 0; i < data.length; i++) {
-
-                    data[i][field||'avg'] = invokeFn2(obj, data[i]) / num;
+                    var arg = data[i];
+                    if (len > 3) {
+                        for (var k = 3; k < len; k++)
+                            arg = extend({}, arg, arguments[k]);
+                    }
+                    data[i][field || 'avg'] = invokeFn2(obj, arg) / num;
                 }
             }
 
@@ -984,8 +1004,8 @@
        ** description: 选择符合条件的数据行
        **
        **/
-        select: function (expression, data, fields, data2) {
-            var d = [];
+        select: function (expression, data, fields) {
+            var d = [], len = arguments.length;;
             var obj = getFunctionsAndParameters(expression),
                 data = arguments[1];
             if (Object.prototype.toString.call(fields) === '[object String]') {
@@ -994,8 +1014,12 @@
 
             for (var i = 0; i < data.length; i++) {
                 var arg = data[i];
-                if (!!data2)
-                    arg = extend({}, arg, data2);
+                
+                if (len > 3) {
+                    for (var k = 3; k < len;k++)
+                        arg = extend({}, arg, arguments[k]);
+                }                  
+                    
                 if (invokeFn2(obj, arg)) {
                     var ob = {};
                     for (var k = 0; k < fields.length; k++) {
