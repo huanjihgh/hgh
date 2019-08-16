@@ -9,7 +9,7 @@
 		 })
 
 		2),使用注册的函数
-			var b=el.if('a[fly]b',{a:'i',b:' am fly'});
+			var b=el.if('$a[fly]$b',{a:'i',b:' am fly'});
 
 			console.log(b);
 			
