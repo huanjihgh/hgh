@@ -2,6 +2,10 @@
 </script>
 <script>
 
+  
+
+
+    //test data
     var data=[
         {f1:100,f2:30},
         {f1:78,f2:30},
@@ -27,9 +31,15 @@
        { f1: 12, f2: 30, name: 'pfpp' }
     ]
 
+   
+
     //筛选数据返回指定的列
     var ddd = el.select("($f1=100)||($f1=32)||($name[like]f)", data2, "f1,f2,name");
     console.log(ddd);
+
+
+    var ccc = el.select("$f1*2>$c", data2, "f1,f2,name", {c:30});
+    console.log(ccc);
 
 
     var xx = el.if('xxxxxx+(100*100)', { a: 100, b: 10 });
