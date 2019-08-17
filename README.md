@@ -1,8 +1,59 @@
 # hgh
 
-	1,预定义的函数函数有如下:
+    1,el是个全局对象,该对象包含方法有：
+        run、if、filter、sum、avg、select
+
+        1）、run 会执行一个字符表达式，返回字符表达式的结果
+            参数
+                expression：字符表达式
+                ...:可变参数对象，该参数会合并成一个参数对象提供给字符表达式执行
+            返回值
+                返回字符表达的结果
+        2）、if 执行一个字符表达式，返回字符表达式结果
+            参数
+               expression：字符表达式
+               data:参数对象
+               trueResult:如果参数表达式执行返回非空值，true被定义，将返回trueResult定义的值，或者字符表达的结果
+               falseResult：如果参数定义且字符表达式结果值为false，则返回 falseResult的值
+            返回值
+                字符表达返回值为true，trueResult已定义返回trueResult，否则返回字符表达式的值
+                字符表达式返回false，falseResult已定义返回falseResult，否则返回字符表达式的值
+        3）、filter 会执行一个字符表达式
+            参数
+                expression：字符表达式
+                data:过滤的数组源数据
+                ...:可变参数对象，将会合并到一个对象参与字符表达式计算
+            返回值
+                返回符合过滤条件的结果集
+
+        4）、sum 求和数组数据集
+            参数
+                expression：字符表达式
+                data：要计算求和的数据集
+                ...:可变参数，会合并到data的没一列参与计算
+            返回值
+                返回每一行求和的值
+
+        5）、avg 求数组数据集的某行的值的平均价
+            参数
+                expression：字符表达式
+                data：要计算求和的数据集
+                ...:可变参数，会合并到data的没一列参与计算
+            返回值
+                返回每一行求和的值
+
+        6）、select 选择符合要求的行和行的列
+            参数
+                expression：字符表达式，过滤表达式
+                data：要计算求和的数据集
+                field：要筛选的列名称,如'field1,field2...'或者['field1','field2']
+                ...:可变参数对象，会合并到data的没一列参与计算
+            返回值
+                返回符合要求的列
+
+	2,预定义的函数函数有如下:
 		 = equal,>great,<little,<= littleEqual,>= greatEquel,!= notEqual,+ plus,- minus,* mul,/ div,|| or ,&& and;
-	2,用户可以自定义扩展函数,
+	3,用户可以自定义扩展函数,
 		比如可在一个函数 flay
 		1),注册函数,el.extendFn('fly',function(a,b){ 
 			return a+b;
@@ -17,6 +68,7 @@
 			output: i am fly
 
 
+    4、使用列子
     //test data
     var data=[
         {f1:100,f2:30},
@@ -30,6 +82,7 @@
     //求平均值，这里两列相加后会除以2 $开头的是变量，非$开头的是常量
     var d=el.avg('($f1+$f2)',data);
     console.log(d);
+
 
 
 

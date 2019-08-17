@@ -850,10 +850,10 @@
             Fn.prototype[functionName] = fn;
         },
 
-        test: function (expression) {
-            var obj = getFunctionsAndParameters(expression);
-            console.log(obj);
-        },
+        // test: function (expression) {
+        //     var obj = getFunctionsAndParameters(expression);
+        //     console.log(obj);
+        // },
 
         run: function (expression) {
             var obj = getFunctionsAndParameters(expression),
